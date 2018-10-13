@@ -1,17 +1,62 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int n = 5;
+char alphabet[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+char display[100];
 
 int clean_stdin(){
     while (getchar()!='\n');
     return 1;
 }
 
-int disp_truthtable(int twoD){
+char *foo(int count) {
+    char *ret = malloc(count);
+    if(!ret)
+        return NULL;
 
-    for(int i = 0; i < sizeof(twoD) / sizeof(twoD); i++){
-        printf("test");
-    
+    for(int i = 0; i < count; ++i) 
+        ret[i] = i;
+
+    return ret;
+}
+
+int gen_bincount() {
+    char *p = foo(10);
+    if(p) {
+        // do stuff with p
+        free(p);
     }
-    return 1;
+    return *p;
+}
+
+char* disp_truthtable(int input[],int output[],int isize, int osize){
+
+    char* source = alphabet;
+    char* destination = display;
+    memset(display,0,sizeof(display));
+
+    for(int i = 0; i < isize;i++){
+        *destination++ = *source++;
+        *destination++ = ' ';
+    }
+
+    *destination++ = '|';
+    *destination++ = ' ';
+
+    for(int i = 0; i < osize;i++){
+        *destination++ = *source++;
+        *destination++ = ' ';
+    }
+
+    *destination++ = '\n';
+
+    for(int i = 0; i < 2 * (isize + osize) + 1;i++){
+        *destination++ = '-';
+    }
+
+    return display;
 }
 
 int main(void){
@@ -38,22 +83,17 @@ int main(void){
         int test_input1[4] = {0,1,0,1};
         int test_output[4] = {0,1,0,0};
         int test[3][4] = {*test_input0,*test_input1,*test_output};
-
         
-        /*
-        for(int i = 0; i < sizeof(test_output) / sizeof(*test_output); i++){
-            printf("%d",test_output[i]);
-        }
-        */
 
         if(mode == 1){
-            printf("mode 1 activaaate\n");
+            // printf("mode 1 activaaate\n");
         }
 
         else if(mode == 2){
-            printf("mode 2 activaaate\n");
+            // printf("mode 2 activaaate\n");
         }
-            disp_truthtable(9);
+
+        printf("%s\n",disp_truthtable(test_input0,test_output,sizeof(test_input0)/sizeof(*test_input0),sizeof(test_output)/sizeof(*test_output)));
     }
 
     return 0;  
